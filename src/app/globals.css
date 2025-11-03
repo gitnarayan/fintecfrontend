@@ -22,6 +22,7 @@
 	--color-primary: var(--primary);
 	--color-primary-foreground: var(--primary-foreground);
 	--color-secondary: var(--secondary);
+	--color-placeholder: var(--placeholder);
 	--color-secondary-foreground: var(--secondary-foreground);
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
@@ -53,9 +54,10 @@
 	--card-foreground: oklch(0.031 0.082 247.13);
 	--popover: oklch(1 0 0);
 	--popover-foreground: oklch(0.031 0.082 247.13);
-	--primary: oklch(0.332 0.703 290.22);
+	--primary: oklch(53.153% 0.15512 252.141); /*oklch(0.332 0.703 290.22);*/
 	--primary-foreground: oklch(0.979 0.016 225);
 	--secondary: oklch(0.959 0.031 225);
+	--placeholder: oklch(74.491% 0.10237 237.151);
 	--secondary-foreground: oklch(0.089 0.106 247.13);
 	--muted: oklch(0.959 0.031 225);
 	--muted-foreground: oklch(0.448 0.153 235.204);
@@ -63,27 +65,8 @@
 	--accent-foreground: oklch(0.089 0.106 247.13);
 	--destructive: oklch(0.409 0.67 0);
 	--border: oklch(0.907 0.055 233.157);
-	--input: oklch(0.907 0.055 233.157);
-	--ring: oklch(0.332 0.703 290.22);
-
-	/* --background: oklch(1 0 0);
-	--foreground: oklch(0.145 0 0);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.145 0 0);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.145 0 0);
-	--primary: oklch(0.205 0 0);
-	--primary-foreground: oklch(0.985 0 0);
-	--secondary: oklch(0.97 0 0);
-	--secondary-foreground: oklch(0.205 0 0);
-	--muted: oklch(0.97 0 0);
-	--muted-foreground: oklch(0.556 0 0);
-	--accent: oklch(0.97 0 0);
-	--accent-foreground: oklch(0.205 0 0);
-	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(0.922 0 0);
-	--input: oklch(0.922 0 0);
-	--ring: oklch(0.708 0 0); */
+	--input: oklch(89.159% 0.05668 245.276);
+	--ring: oklch(53.153% 0.15512 252.141); /*oklch(0.332 0.703 290.22);*/
 
 	--radius: 0.625rem;
 	--chart-1: oklch(0.646 0.222 41.116);
@@ -181,4 +164,12 @@
 .errorMessage {
 	color: red;
 	font-size: small;
+}
+
+.text-gradient {
+  @apply font-bold text-2xl bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent tracking-tight;
+}
+
+.text-gradient-alt {
+  @apply font-bold text-2xl bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent tracking-tight;
 }

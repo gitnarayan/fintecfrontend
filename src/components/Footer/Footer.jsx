@@ -5,7 +5,7 @@ function Footer() {
 		<footer className="border-t bg-white">
 			<div className="container flex flex-col gap-12 py-10 md:flex-row md:gap-8 md:py-12 px-4 md:px-6">
 				<div className="flex-1 space-y-4">
-					<div className="font-bold text-xl bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+					<div className="text-gradient">
 						MetroFintech
 					</div>
 					<p className="text-sm text-gray-500">Your complete financial management platform.</p>

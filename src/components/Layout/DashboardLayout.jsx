@@ -46,8 +46,8 @@ export default function DashboardLayout({ children }) {
 		<div className="flex min-h-screen bg-gray-50">
 			{/* Left Side Navigation Panel (desktop only) */}
 			<TooltipProvider>
-				<nav className="hidden md:flex flex-col fixed left-0 top-0 bottom-0 w-16 bg-gradient-to-b from-purple-700 to-blue-700 z-10">
-					<div className="flex items-center justify-center h-16 border-b border-purple-600">
+				<nav className="hidden md:flex flex-col fixed left-0 top-0 bottom-0 w-16 bg-gradient-to-b from-cyan-600 to-blue-600 z-10">
+					<div className="flex items-center justify-center h-16 border-b border-cyan-700">
 						<Link href="/" className="text-white font-bold text-xl">
 							HF
 						</Link>
@@ -65,7 +65,7 @@ export default function DashboardLayout({ children }) {
 									>
 										<item.icon className="h-6 w-6" />
 										{pathname === item.href && (
-											<span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-r-full" />
+											<span className="absolute left-0 top-1/2 -translate-y-1/4 w-1 h-8 bg-white rounded-r-full" />
 										)}
 									</Link>
 								</TooltipTrigger>
@@ -119,7 +119,7 @@ export default function DashboardLayout({ children }) {
 								<span className="sr-only">Toggle Menu</span>
 							</Button>
 						</SheetTrigger>
-						<SheetContent side="left" className="w-72 p-0 bg-gradient-to-b from-purple-700 to-blue-700">
+						<SheetContent side="left" className="w-72 p-0 bg-gradient-to-b from-cyan-700 to-blue-600">
 							<div className="grid gap-4 py-4">
 								<div className="px-6 flex items-center justify-between border-b border-white/20 pb-4">
 									<Link href="/" className="flex items-center gap-2 text-white">
@@ -166,7 +166,7 @@ export default function DashboardLayout({ children }) {
 						</SheetContent>
 					</Sheet>
 					<Link href="/" className="flex items-center gap-2 md:hidden">
-						<div className="font-bold text-xl bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+						<div className="text-gradient">
 							Helios Fintec
 						</div>
 					</Link>

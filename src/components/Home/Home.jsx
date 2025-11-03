@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle2, Download, BarChart3, Shield, CreditCard, Wallet } from "lucide-react"
+import { ArrowRight, CheckCircle2, Download, BarChart3, Shield, CreditCard, Wallet, Zap } from "lucide-react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Image from "next/image";
@@ -68,149 +68,9 @@ export default function Home() {
 
 	return (
 		<div className="flex flex-col">
-			{/* Hero Section */}
-			{/* <section className="w-full min-h-screen py-12 md:py-24 lg:py-32 bg-gradient-to-r from-purple-50 to-blue-50">
-				<div className="container px-4 md:px-6">
-					<div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-						<div className="space-y-4">
-							<h1 className="text-3xl font-bold sm:text-5xl md:text-6xl bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
-								Your Financial Journey Simplified
-							</h1>
-							<p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-								Manage all your investments, loans, insurance, and credit cards in one place. Get personalized insights
-								and make smarter financial decisions.
-							</p>
-							<div className="flex flex-col gap-2 min-[400px]:flex-row">
-								<Link href="/register">
-									<Button size="lg"
-										className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600"
-									>
-										Get Started <ArrowRight className="ml-2 h-4 w-4" />
-									</Button>
-								</Link>
-							</div>
-						</div>
-						<div className="mx-auto lg:mx-0 relative">
-							<div className="absolute -top-4 -left-4 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob"></div>
-							<div className="absolute -bottom-8 right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-2000"></div>
-							<div className="absolute -bottom-8 -left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-4000"></div>
-							<div className="relative shadow-2xl rounded-2xl overflow-hidden border border-gray-200">
-								<img
-									src="/placeholder.svg?height=600&width=800"
-									alt="Dashboard Preview"
-									width={600}
-									height={400}
-									className="w-full h-auto object-cover rounded-2xl"
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section> */}
-
-			{/* Features Section */}
-			{/* <section className="w-full py-12 md:py-24 lg:py-32">
-				<div className="px-4 md:px-6">
-					<div className="flex flex-col items-center justify-center space-y-4 text-center">
-						<div className="space-y-2">
-							<div className="inline-block rounded-lg bg-purple-100 px-3 py-1 text-sm text-purple-600">Features</div>
-							<h2 className="text-3xl font-bold md:text-4xl/tight">
-								Everything you need to manage your finances
-							</h2>
-							<p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-								Our platform provides a comprehensive suite of tools to help you manage your financial life.
-							</p>
-						</div>
-					</div>
-					<div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
-						<div className="grid gap-1 p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-							<div className="flex items-center gap-2 text-purple-600">
-								<CheckCircle2 className="h-5 w-5" />
-								<h3 className="text-lg font-bold">Investment Tracking</h3>
-							</div>
-							<p className="text-sm text-gray-500">
-								Track all your investments in one place with real-time updates and performance analytics.
-							</p>
-						</div>
-						<div className="grid gap-1 p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-							<div className="flex items-center gap-2 text-blue-600">
-								<CheckCircle2 className="h-5 w-5" />
-								<h3 className="text-lg font-bold">Loan Management</h3>
-							</div>
-							<p className="text-sm text-gray-500">
-								Manage all your loans, track EMIs, and get insights on how to optimize your repayments.
-							</p>
-						</div>
-						<div className="grid gap-1 p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-							<div className="flex items-center gap-2 text-pink-600">
-								<CheckCircle2 className="h-5 w-5" />
-								<h3 className="text-lg font-bold">Insurance Dashboard</h3>
-							</div>
-							<p className="text-sm text-gray-500">
-								Keep track of all your insurance policies, premiums, and coverage details in one place.
-							</p>
-						</div>
-						<div className="grid gap-1 p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-							<div className="flex items-center gap-2 text-green-600">
-								<CheckCircle2 className="h-5 w-5" />
-								<h3 className="text-lg font-bold">Credit Card Analytics</h3>
-							</div>
-							<p className="text-sm text-gray-500">
-								Analyze your spending patterns and get recommendations to optimize your credit card usage.
-							</p>
-						</div>
-						<div className="grid gap-1 p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-							<div className="flex items-center gap-2 text-orange-600">
-								<CheckCircle2 className="h-5 w-5" />
-								<h3 className="text-lg font-bold">Robo Advisory</h3>
-							</div>
-							<p className="text-sm text-gray-500">
-								Get personalized investment advice based on your financial goals and risk profile.
-							</p>
-						</div>
-						<div className="grid gap-1 p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-							<div className="flex items-center gap-2 text-teal-600">
-								<CheckCircle2 className="h-5 w-5" />
-								<h3 className="text-lg font-bold">Financial Planning</h3>
-							</div>
-							<p className="text-sm text-gray-500">
-								Plan for your future with our comprehensive financial planning tools and calculators.
-							</p>
-						</div>
-					</div>
-				</div>
-			</section> */}
-
-			{/* CTA Section */}
-			{/* <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-purple-600 to-blue-500 text-white">
-				<div className="container px-4 md:px-6">
-					<div className="flex flex-col items-center justify-center space-y-4 text-center">
-						<div className="space-y-2">
-							<h2 className="text-3xl font-bold md:text-4xl/tight">
-								Ready to take control of your finances?
-							</h2>
-							<p className="max-w-[600px] text-white/80 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-								Join thousands of users who are already managing their finances with Helios Fintec.
-							</p>
-						</div>
-						<div className="flex flex-col gap-2 min-[400px]:flex-row">
-							<Link href="/register">
-								<Button size="lg" className="bg-white text-purple-600 hover:bg-gray-100">
-									Create Account
-								</Button>
-							</Link>
-							<Link href="/login">
-								<Button size="lg" variant="outline" className="border-white text-muted-foreground hover:bg-white/10">
-									Login
-								</Button>
-							</Link>
-						</div>
-					</div>
-				</div>
-			</section> */}
 
 			{/* Hero Section */}
-			<section className="min-h-[90vh] pt-8 pb-12 sm:pb-20 md:pb-20 w-full flex items-center bg-gradient-to-r from-purple-50 to-blue-50">
+			{/* <section className="min-h-[90vh] pt-8 pb-12 sm:pb-20 md:pb-20 w-full flex items-center bg-gradient-to-r from-purple-50 to-blue-50">
 				<div className="container px-4 md:px-6">
 					<div className="grid gap-14 md:gap-20 lg:grid-cols-2 lg:gap-12 items-center">
 						<div className="">
@@ -258,6 +118,81 @@ export default function Home() {
 								/>
 							</div>
 						</div>
+					</div>
+				</div>
+			</section> */}
+
+			<section className="relative lg:min-h-[100vh] flex items-center bg-gradient-to-br from-slate-900 via-indigo-900 to-black text-white overflow-hidden">
+				{/* Background grid pattern */}
+				<div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/asfalt-dark.png')]"></div>
+
+				{/* Floating gradient rings */}
+				<div className="absolute top-20 -left-20 w-96 h-96 bg-indigo-500/30 rounded-full blur-3xl animate-pulse"></div>
+				<div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+
+				<div className="relative z-10 container mx-auto px-6 pt-28 pb-16 lg:py-16 grid lg:grid-cols-2 gap-10 xl:gap-20 items-center">
+					{/* LEFT CONTENT */}
+					<div className="space-y-8 text-center lg:text-left">
+						<h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+							<span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-cyan-400">
+								Redefining Finance
+							</span>
+							<span className="block text-white/90">
+								with Intelligence & Simplicity
+							</span>
+						</h1>
+
+						<p className="text-gray-300 max-w-md mx-auto lg:mx-0 text-lg">
+							Manage investments, loans, and insurance effortlessly.
+							Your money — powered by innovation.
+						</p>
+
+						<div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-2">
+							<Button
+								size="lg"
+								className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 shadow-xl shadow-blue-500/30"
+							>
+								Get Started
+							</Button>
+							<Button
+								size="lg"
+								variant="outline"
+							>
+								Explore Platform
+							</Button>
+						</div>
+
+						{/* Floating stats cards */}
+						<div className="flex gap-4 pt-6 justify-center lg:justify-start">
+							<div className="backdrop-blur-xl bg-white/10 p-4 rounded-2xl border border-white/20 shadow-lg">
+								<p className="text-2xl font-bold text-cyan-300">$2.5B+</p>
+								<p className="text-sm text-gray-400">Assets Managed</p>
+							</div>
+							<div className="backdrop-blur-xl bg-white/10 p-4 rounded-2xl border border-white/20 shadow-lg">
+								<p className="text-2xl font-bold text-cyan-300">150K+</p>
+								<p className="text-sm text-gray-400">Active Users</p>
+							</div>
+						</div>
+					</div>
+
+					{/* RIGHT SIDE - VISUAL MOCKUP */}
+					<div className="relative flex justify-center lg:justify-end">
+						{/* Dummy 3D Illustration */}
+						<div className="relative w-[90%] max-w-md rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-gradient-to-tr from-slate-800 to-slate-700">
+							<img
+								src="https://placehold.co/500x400/1e1e2f/ffffff?text=Dashboard+Preview"
+								alt="Fintech dashboard"
+								className="w-full h-full object-cover opacity-90"
+							/>
+							{/* Overlay Glass Card */}
+							<div className="absolute bottom-6 right-6 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20">
+								<p className="text-sm text-gray-300">Live Portfolio</p>
+								<p className="text-lg font-bold text-cyan-300">+12.4% Today</p>
+							</div>
+						</div>
+
+						{/* Floating circular glow */}
+						<div className="absolute -bottom-10 -left-10 w-56 h-56 bg-cyan-400/30 rounded-full blur-2xl"></div>
 					</div>
 				</div>
 			</section>
@@ -347,7 +282,7 @@ export default function Home() {
 					{/* Stats */}
 					<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-12">
 						<div className="bg-white p-6 rounded-xl shadow-sm text-center">
-							<div className="text-4xl font-bold text-purple-600 mb-2">₹100 Cr+</div>
+							<div className="text-4xl font-bold text-cyan-600 mb-2">₹100 Cr+</div>
 							<div className="text-gray-500">Assets Under Management</div>
 						</div>
 						<div className="bg-white p-6 rounded-xl shadow-sm text-center">
@@ -444,7 +379,7 @@ export default function Home() {
 			</section>
 
 			{/* App Promotion */}
-			<section className="w-full py-12 md:py-24 bg-gradient-to-r from-purple-600 to-blue-600 text-white">
+			{/* <section className="w-full py-12 md:py-24 bg-gradient-to-r from-purple-600 to-blue-600 text-white">
 				<div className="container px-4 md:px-6">
 					<div className="grid lg:grid-cols-2 gap-12 items-center lg:justify-items-end">
 						<div className="space-y-4">
@@ -488,7 +423,67 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
+			</section> */}
+
+			<section className="relative w-full py-16 md:py-24 bg-gradient-to-br from-slate-950 via-indigo-900 to-slate-900 text-white overflow-hidden">
+				{/* Soft glowing background lights */}
+				<div className="absolute top-10 left-10 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"></div>
+				<div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
+
+				<div className="container relative z-10 px-6 md:px-8 grid lg:grid-cols-2 gap-16 items-center">
+					{/* LEFT CONTENT */}
+					<div className="space-y-6 text-center lg:text-left">
+						<h2 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
+							<span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+								Get MetroFintech
+							</span>
+							<br />
+							<span className="text-white/90">on the Go!</span>
+						</h2>
+
+						<p className="text-gray-300 max-w-md mx-auto lg:mx-0 text-lg md:text-xl">
+							Manage your money with our mobile app.
+							Track investments, pay EMIs, and grow smarter — anytime, anywhere.
+						</p>
+
+						{/* Download Buttons */}
+						<div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
+							<button className="flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-3 rounded-xl border border-white/20 transition-all duration-300">
+								<img
+									src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+									alt="Google Play"
+									className="h-10"
+								/>
+							</button>
+							<button className="flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-3 rounded-xl border border-white/20 transition-all duration-300">
+								<img
+									src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+									alt="App Store"
+									className="h-10"
+								/>
+							</button>
+						</div>
+					</div>
+
+					{/* RIGHT SIDE - APP PREVIEW */}
+					<div className="relative flex justify-center lg:justify-end">
+						{/* Glowing backdrop */}
+						<div className="absolute top-1/2 -translate-y-1/2 right-10 w-[400px] h-[400px] bg-cyan-500/30 rounded-full blur-3xl"></div>
+
+						{/* Mockup Frame */}
+						<div className="relative w-[320px] sm:w-[360px] h-[520px] rounded-[2.5rem] overflow-hidden border border-white/20 shadow-[0_0_60px_-15px_rgba(0,200,255,0.4)] backdrop-blur-md">
+							<img
+								src="https://placehold.co/360x520/101828/ffffff?text=App+Preview"
+								alt="Mobile App Preview"
+								className="w-full h-full object-cover"
+							/>
+							{/* Glass reflection overlay */}
+							<div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/5"></div>
+						</div>
+					</div>
+				</div>
 			</section>
+
 
 			{/* Latest Insights */}
 			<section className="w-full py-12 md:py-24 bg-white">
@@ -591,7 +586,7 @@ export default function Home() {
 						<div className="flex flex-col gap-2 min-[400px]:flex-row">
 							<Button
 								size="lg"
-								className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600"
+								variant="gradient"
 							>
 								Start Now
 							</Button>

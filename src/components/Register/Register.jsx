@@ -6,26 +6,12 @@ import { useRouter } from "next/navigation"
 import { useDispatch } from "react-redux"
 import { CalendarDays, Eye, EyeOff, Lock, Mail, Phone, Transgender, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select"
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 
-// 🔁 Replace with your actual Redux action
 import { register } from "@/store/features/auth-slice"
 
 export default function Register() {
@@ -94,7 +80,7 @@ export default function Register() {
 
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-purple-50 to-blue-50 p-4">
-			<Card className="w-full max-w-xl shadow-lg">
+			<Card className="w-full max-w-2xl shadow-lg">
 				<CardHeader className="space-y-1">
 					<CardTitle className="text-2xl font-bold text-center">Create an account</CardTitle>
 					<CardDescription className="text-center">Enter your information to create your account</CardDescription>
@@ -251,11 +237,11 @@ export default function Register() {
 								className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 							>
 								I agree to the{" "}
-								<Link href="/terms" className="text-purple-600 hover:underline">
+								<Link href="/terms" className="text-primary hover:underline">
 									terms of service
 								</Link>{" "}
 								and{" "}
-								<Link href="/privacy" className="text-purple-600 hover:underline">
+								<Link href="/privacy" className="text-primary hover:underline">
 									privacy policy
 								</Link>
 							</label>
@@ -265,14 +251,14 @@ export default function Register() {
 					<CardFooter className="flex flex-col space-y-4 mt-6">
 						<Button
 							type="submit"
-							className="w-full bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600"
+							className="w-full bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 transition-all"
 							disabled={isLoading}
 						>
 							{isLoading ? "Creating account..." : "Create account"}
 						</Button>
 						<div className="text-center text-sm">
 							Already have an account?{" "}
-							<Link href="/auth/login" className="text-purple-600 hover:underline">
+							<Link href="/auth/login" className="text-primary hover:underline">
 								Sign in
 							</Link>
 						</div>

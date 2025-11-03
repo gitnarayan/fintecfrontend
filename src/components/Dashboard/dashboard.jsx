@@ -30,7 +30,7 @@ export default function Dashboard() {
 					</Button> */}
 					<Button
 						size="lg"
-						className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600"
+						variant="gradient"
 					>
 						<DollarSign className="mr-2 h-4 w-4" />
 						Add Funds
@@ -43,14 +43,14 @@ export default function Dashboard() {
 				<CardContent className="p-0">
 					<div className="flex flex-col md:flex-row">
 						<div className="relative bg-blue-100 md:w-1/3">
-							<div className="relative h-full">
+							<div className="relative h-44 md:h-full">
 								<Image
 									src="/placeholder.svg"
 									alt="Mutual Funds"
 									fill
 									className="object-cover w-full h-auto opacity-50"
 								/>
-								<h3 className="z-10 absolute top-2 right-6 text-4xl font-bold text-blue-600"> Mutual Funds</h3>
+								<h3 className=" text-gradient-alt z-10 absolute top-2 right-6 text-4xl!"> Mutual Funds</h3>
 							</div>
 							<div className="hidden md:block">
 								<ChevronRight className="h-6 w-6 text-blue-500" />
