@@ -4,7 +4,9 @@ import apiClient from "@/lib/apiClient";
 // Login User
 export const login = createAsyncThunk("auth/login", async (credentials, thunkAPI) => {
   try {
-    const response = await apiClient.post("/auth/logIn", credentials);
+    const response = await apiClient.post("/auth/login", credentials);
+    console.log("API BASE:", apiClient.defaults.baseURL);
+
     // console.log(response);
     return response.data;
   } catch (error) {
@@ -14,7 +16,7 @@ export const login = createAsyncThunk("auth/login", async (credentials, thunkAPI
 });
 export const register = createAsyncThunk("auth/register", async (credentials, thunkAPI) => {
   try {
-    const response = await apiClient.post("/auth/signUp", credentials);
+    const response = await apiClient.post("/auth/signup", credentials);
     console.log(response);
     return response.data;
   } catch (error) {

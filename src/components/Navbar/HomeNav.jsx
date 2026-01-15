@@ -16,7 +16,7 @@ function HomeNav() {
 
 				{/* NAV LINKS */}
 				<nav className="hidden md:flex items-center gap-8">
-					{[ "Investments", "Insurance", "Loans", "Credit Cards", "Resources" ].map((item) => (
+					{[ "Investments", "Insurance", "Loans", "Credit Cards", "Resources" , "Profile" ].map((item) => (
 						<Link
 							key={item}
 							href="#"

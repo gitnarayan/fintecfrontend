@@ -6,7 +6,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Bell, CreditCard, HelpCircle, LayoutDashboard, LogOut, Menu, PieChart, Settings, Shield, User, Wallet, X, ChartCandlestick } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
 	DropdownMenu,
@@ -31,8 +32,8 @@ const navigation = [
 
 export default function DashboardLayout({ children }) {
 	const pathname = usePathname()
-	const [ isSidebarOpen, setIsSidebarOpen ] = useState(false)
-	const [ activePage, setActivePage ] = useState("Dashboard")
+	const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+	const [activePage, setActivePage] = useState("Dashboard")
 
 	// Set active page based on pathname
 	useEffect(() => {
@@ -40,7 +41,7 @@ export default function DashboardLayout({ children }) {
 		if (currentPage) {
 			setActivePage(currentPage.name)
 		}
-	}, [ pathname ])
+	}, [pathname])
 
 	return (
 		<div className="flex min-h-screen bg-gray-50">
@@ -119,20 +120,28 @@ export default function DashboardLayout({ children }) {
 								<span className="sr-only">Toggle Menu</span>
 							</Button>
 						</SheetTrigger>
-						<SheetContent side="left" className="w-72 p-0 bg-gradient-to-b from-cyan-700 to-blue-600">
+
+						{/* <SheetContent side="left" className="w-72 p-0 bg-gradient-to-b from-cyan-700 to-blue-600">
+
+
+							
+
+
 							<div className="grid gap-4 py-4">
 								<div className="px-6 flex items-center justify-between border-b border-white/20 pb-4">
 									<Link href="/" className="flex items-center gap-2 text-white">
 										<div className="font-bold text-xl">Helios Fintec</div>
 									</Link>
-									{/* <Button
+									<Button
 										variant="ghost"
 										size="icon"
 										onClick={() => setIsSidebarOpen(false)}
 										className="text-white hover:bg-white/10"
 									>
 										<X className="h-5 w-5" />
-									</Button> */}
+									</Button>
+
+
 								</div>
 								<div className="grid gap-1 px-2">
 									{navigation.map((item) => (
@@ -163,7 +172,45 @@ export default function DashboardLayout({ children }) {
 									</div>
 								</div>
 							</div>
+						</SheetContent> */}
+
+						<SheetContent
+							side="left"
+							className="w-72 p-0 bg-gradient-to-b from-cyan-700 to-blue-600"
+						>
+							<VisuallyHidden>
+								<SheetTitle>Dashboard Navigation</SheetTitle>
+							</VisuallyHidden>
+
+							<div className="grid gap-4 py-4">
+								<div className="px-6 flex items-center justify-between border-b border-white/20 pb-4">
+									<Link href="/" className="flex items-center gap-2 text-white">
+										<div className="font-bold text-xl">Helios Fintec</div>
+									</Link>
+								</div>
+
+								<div className="grid gap-1 px-2">
+									{navigation.map((item) => (
+										<Link
+											key={item.name}
+											href={item.href}
+											onClick={() => setIsSidebarOpen(false)}
+											className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all ${pathname === item.href
+													? "bg-white/10 text-white"
+													: "text-white/70 hover:text-white hover:bg-white/5"
+												}`}
+										>
+											<item.icon className="h-5 w-5" />
+											{item.name}
+										</Link>
+									))}
+								</div>
+							</div>
 						</SheetContent>
+
+
+
+
 					</Sheet>
 					<Link href="/" className="flex items-center gap-2 md:hidden">
 						<div className="text-gradient">

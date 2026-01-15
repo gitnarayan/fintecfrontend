@@ -11,19 +11,21 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-
+import OtpModal from "@/components/Register/OtpModal";
 import { register } from "@/store/features/auth-slice"
 
 export default function Register() {
 	const router = useRouter()
 	const dispatch = useDispatch()
 
-	const [ showPassword, setShowPassword ] = useState(false)
-	const [ isLoading, setIsLoading ] = useState(false)
-	const [ error, setError ] = useState('')
+	const [showPassword, setShowPassword] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
+	const [error, setError] = useState('')
+	const [openOtpModal, setOpenOtpModal] = useState(false);
+
 
 	// Form data
-	const [ formData, setFormData ] = useState({
+	const [formData, setFormData] = useState({
 		firstName: "",
 		lastName: "",
 		gender: "",
@@ -36,7 +38,7 @@ export default function Register() {
 	})
 
 	const handleChange = (e) => {
-		setFormData({ ...formData, [ e.target.id ]: e.target.value })
+		setFormData({ ...formData, [e.target.id]: e.target.value })
 	}
 
 	const handleGenderChange = (value) => {
@@ -250,12 +252,14 @@ export default function Register() {
 
 					<CardFooter className="flex flex-col space-y-4 mt-6">
 						<Button
-							type="submit"
+							type="button"
+							onClick={() => setOpenOtpModal(true)}
 							className="w-full bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 transition-all"
 							disabled={isLoading}
 						>
-							{isLoading ? "Creating account..." : "Create account"}
+							Create account
 						</Button>
+
 						<div className="text-center text-sm">
 							Already have an account?{" "}
 							<Link href="/auth/login" className="text-primary hover:underline">
@@ -265,6 +269,18 @@ export default function Register() {
 					</CardFooter>
 				</form>
 			</Card>
+			<OtpModal
+				open={openOtpModal}
+				onClose={() => setOpenOtpModal(false)}
+				onContinue={() => {
+					setOpenOtpModal(false);
+					router.push("/onboarding");
+				}}
+				email={formData.email}
+				mobile={formData.mobile}
+			/>
+
+
 		</div>
 	)
 }

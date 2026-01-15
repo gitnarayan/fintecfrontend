@@ -13,9 +13,8 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 
 export default function Sip() {
 	const dispatch = useDispatch()
-	const [ selectedFundType, setSelectedFundType ] = useState(null)
-	const [ searchQuery, setSearchQuery ] = useState("")
-	const [ sipData, setSipData ] = useState([])
+	// const [selectedFundType, setSelectedFundType] = useState(null)
+	const [searchQuery, setSearchQuery] = useState("")
 
 	const fundTypes = [
 		{ id: "equity", label: "Equity" },
@@ -80,26 +79,42 @@ export default function Sip() {
 		},
 	]
 
-	const [ filter, setFilter ] = useState({
+	const [filter, setFilter] = useState({
 		mutualFundType: '',
-		page: '',
-		limit: '',
+		page: 1,
+		limit: 10,
 	})
 	console.log(filter);
 
 	useEffect(() => {
 		dispatch(getSIP(filter))
 		dispatch(storeFilterData(filter))
-	}, [ dispatch, filter ])
+	}, [dispatch, filter.mutualFundType, filter.page, filter.limit])
 
 	const sipList = useSelector((state) => state.mutualFund.sip);
-	const filterData = useSelector((state) => state.mutualFund.filter);
-	const data = sipList?.data;
 
-	useEffect(() => {
-		console.log(data);
-		setSipData(data)
-	}, [ sipList ])
+	const totalCount = sipList?.data?.totalCount || 0
+	const page = sipList?.data?.page || filter.page
+	const limit = sipList?.data?.limit || filter.limit
+
+	const totalPages = Math.ceil(totalCount / limit)
+	const data = sipList?.data?.data;
+
+	const getVisiblePages = () => {
+		if (totalPages <= 7) {
+			return Array.from({ length: totalPages }, (_, i) => i + 1)
+		}
+
+		if (filter.page <= 4) {
+			return [1, 2, 3, 4, 5, "...", totalPages]
+		}
+
+		if (filter.page >= totalPages - 3) {
+			return [1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
+		}
+
+		return [1, "...", filter.page - 1, filter.page, filter.page + 1, "...", totalPages]
+	}
 
 	// useEffect(() => {
 	// 	setFilter((pre) => ({ ...pre, page: filterData.page || data?.page, limit: filterData.imit || data?.limit }))
@@ -109,9 +124,9 @@ export default function Sip() {
 
 	// const filteredFunds = mutualFunds.filter((fund) => {
 	// 	// Filter by fund type if selected
-	// 	if (selectedFundType && !fund.type.toLowerCase().includes(selectedFundType.toLowerCase())) {
-	// 		return false
-	// 	}
+	// 	// if (selectedFundType && !fund.type.toLowerCase().includes(selectedFundType.toLowerCase())) {
+	// 	// 	return false
+	// 	// }
 
 	// 	// Filter by search query
 	// 	if (searchQuery && !fund.name.toLowerCase().includes(searchQuery.toLowerCase())) {
@@ -146,29 +161,37 @@ export default function Sip() {
 				</div>
 
 				{/* Fund Type Filters */}
-				<div className="flex justify-center flex-wrap gap-4">
+
+
+				{/* Fund Type Filters */}
+				<RadioGroup
+					value={filter.mutualFundType}
+					onValueChange={(value) =>
+						setFilter(prev => ({
+							...prev,
+							mutualFundType: value,
+							page: 1,
+						}))
+					}
+					className="flex justify-center flex-wrap gap-4"
+				>
 					{fundTypes.map((type) => (
-						<div
+						<label
 							key={type.id}
-							className={`rounded-full border-gray-300 pl-3 pr-4 py-1 hover:bg-secondary border ${selectedFundType === type.id ? "bg-blue-50 border-blue-300 text-blue-700" : "bg-white"
+							htmlFor={type.id}
+							className={`flex items-center gap-2 px-5 py-2 rounded-full border cursor-pointer transition
+        ${filter.mutualFundType === type.id
+									? "bg-blue-50 border-blue-400 text-blue-700"
+									: "bg-white border-gray-300"
 								}`}
-							onClick={() => setSelectedFundType(selectedFundType === type.id ? null : type.id)}
 						>
-							<RadioGroup className="flex items-center gap-2">
-								<div className="flex items-center gap-3">
-									<RadioGroupItem
-										value={type.id}
-										id={type.id}
-										className={selectedFundType === type.id ? "text-blue-600" : ""}
-										checked={selectedFundType === type.id}
-										onChange={() => setFilter((pre) => ({ ...pre, mutualFundType: type.id }))}
-									/>
-									<p className="cursor-pointer">{type.label}</p>
-								</div>
-							</RadioGroup>
-						</div>
+							<RadioGroupItem value={type.id} id={type.id} />
+							<span>{type.label}</span>
+						</label>
 					))}
-				</div>
+				</RadioGroup>
+
+
 
 				{/* Sort and Filter */}
 				<div className="flex justify-end gap-2">
@@ -182,12 +205,12 @@ export default function Sip() {
 
 				{/* Fund List */}
 				<div className="space-y-4">
-					{sipData?.data?.length !== 0 && sipData?.data?.map((fund) => (
-						<Card key={fund?.id} className="overflow-hidden hover:shadow-md transition-shadow py-4">
+					{data?.length > 0 && data.map((fund) => (
+						<Card key={fund?.schemecode} className="overflow-hidden hover:shadow-md transition-shadow py-4">
 							<CardContent className="flex justify-between">
 								<div className="flex items-center">
 									<div className="p-4 flex-shrink-0 w-20 flex items-center justify-center">
-										<div className="font-bold text-lg">{fund?.schemecode}</div>
+										<div className="font-bold text-lg"> {fund?.schemecode}</div>
 									</div>
 									<div className="p-4 flex-grow">
 										<h3 className="font-medium">{fund?.s_name1}</h3>
@@ -226,18 +249,87 @@ export default function Sip() {
 					))}
 				</div>
 			</div >
-			<div className="mt-6">
+			{/* <div className="mt-6">
 				<Pagination>
 					<PaginationContent>
-						<PaginationItem><PaginationPrevious href="#" /></PaginationItem>
+						<PaginationItem><PaginationPrevious
+							onClick={() => {
+								if (filter.page > 1) {
+									setFilter(prev => ({ ...prev, page: prev.page - 1 }))
+								}
+							}}
+						/>
+						</PaginationItem>
 						<PaginationItem><PaginationLink href="#">1</PaginationLink></PaginationItem>
 						<PaginationItem><PaginationLink href="#" isActive>2</PaginationLink></PaginationItem>
 						<PaginationItem><PaginationLink href="#">3</PaginationLink></PaginationItem>
 						<PaginationItem><PaginationEllipsis /></PaginationItem>
-						<PaginationItem><PaginationNext href="#" /></PaginationItem>
+						<PaginationItem><PaginationNext
+							onClick={() => {
+								if (filter.page < totalPages) {
+									setFilter(prev => ({ ...prev, page: prev.page + 1 }))
+								}
+							}}
+						/>
+						</PaginationItem>
+					</PaginationContent>
+				</Pagination>
+			</div> */}
+
+
+			<div className="mt-6">
+				<Pagination>
+					<PaginationContent>
+
+						{/* Previous */}
+						<PaginationItem>
+							<PaginationPrevious
+								href="#"
+								onClick={(e) => {
+									e.preventDefault()
+									if (filter.page > 1) setFilter(prev => ({ ...prev, page: prev.page - 1 }))
+								}}
+							/>
+						</PaginationItem>
+
+						{/* Page Numbers */}
+						{getVisiblePages().map((pageNum, i) => (
+							pageNum === "..." ? (
+								<PaginationItem key={`ellipsis-${i}`}>
+									<PaginationEllipsis />
+								</PaginationItem>
+							) : (
+								<PaginationItem key={pageNum}>
+									<PaginationLink
+										href="#"
+										isActive={filter.page === pageNum}
+										onClick={(e) => {
+											e.preventDefault()
+											setFilter(prev => ({ ...prev, page: pageNum }))
+										}}
+									>
+										{pageNum}
+									</PaginationLink>
+								</PaginationItem>
+							)
+						))}
+
+						{/* Next */}
+						<PaginationItem>
+							<PaginationNext
+								href="#"
+								onClick={(e) => {
+									e.preventDefault()
+									if (filter.page < totalPages) setFilter(prev => ({ ...prev, page: prev.page + 1 }))
+								}}
+							/>
+						</PaginationItem>
+
 					</PaginationContent>
 				</Pagination>
 			</div>
+
+
 		</>
 	)
 }
