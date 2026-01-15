@@ -4,7 +4,7 @@ import React from "react"
 
 import { useState } from "react"
 import Link from "next/link"
-import { ArrowUpRight, Download, TrendingUp, TrendingDown, DollarSign, Percent, BarChart3, ChevronDown, } from "lucide-react"
+import { ArrowUpRight, Download, TrendingUp, TrendingDown, DollarSign, Percent, BarChart3, ChevronDown, ChevronRight   } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
