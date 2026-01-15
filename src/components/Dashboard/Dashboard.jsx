@@ -92,7 +92,8 @@ export default function Dashboard() {
 			</Card>
 
 			{/* Overview Cards */}
-			{/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+
+			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 				<Card className="bg-gradient-to-br from-purple-50 to-white border-purple-100">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Total Assets</CardTitle>
@@ -145,10 +146,14 @@ export default function Dashboard() {
 						</div>
 					</CardContent>
 				</Card>
-			</div> */}
+			</div>
+
+
+
 
 			{/* Candle Stick Chart */}
-			{/* <Card className="overflow-hidden">
+
+			<Card className="overflow-hidden">
 				<CardHeader className="pb-2">
 					<div className="flex items-center justify-between">
 						<div>
@@ -197,7 +202,7 @@ export default function Dashboard() {
 						<CandleStickChart timeRange={timeRange} trend={stockTrend} />
 					</div>
 				</CardContent>
-			</Card> */}
+			</Card>
 
 			{/* Financial Categories */}
 			<Tabs defaultValue="investments" className="space-y-4 mt-12">
@@ -700,6 +705,6 @@ export default function Dashboard() {
 	)
 }
 
-function ChevronRight(props) {
-	return <ChevronDown {...props} className="h-4 w-4 rotate-270" />
-}
+// function ChevronRight(props) {
+// 	return <ChevronDown {...props} className="h-4 w-4 rotate-270" />
+// }
