@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState , useEffect} from "react"
+import { useDispatch, useSelector } from "react-redux"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Eye, EyeOff, Lock, Mail } from "lucide-react"
@@ -8,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useDispatch } from "react-redux"
+// import { useDispatch } from "react-redux"
 import { login } from "@/store/features/auth-slice"
 import Cookies from "js-cookie";
 
@@ -16,12 +17,24 @@ export default function Login() {
 	const router = useRouter()
 	const dispatch = useDispatch()
 
-	const [ showPassword, setShowPassword ] = useState(false)
-	const [ isLoading, setIsLoading ] = useState(false)
-	const [ error, setError ] = useState('')
+	const [showPassword, setShowPassword] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
+	const [error, setError] = useState('')
 
-	const [ email, setEmail ] = useState("")
-	const [ password, setPassword ] = useState("")
+	const [email, setEmail] = useState("")
+	const [password, setPassword] = useState("")
+
+
+	const { user } = useSelector(state => state.auth)
+
+	// 🔥 LOGIN SUCCESS REDIRECT
+	useEffect(() => {
+		if (user && user.email) {
+			router.push("/dashboard")
+		}
+	}, [user, router])
+
+
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()

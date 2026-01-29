@@ -263,16 +263,16 @@ export default function Home() {
 					{/* Partner Logos */}
 					<div className="flex flex-wrap justify-center gap-8 mb-12">
 						<div className="bg-white p-2 rounded-lg shadow-sm">
-							<img src="/placeholder.svg?height=40&width=120" alt="Partner 1" className="h-10" />
+							<img src="/images.png?height=40&width=120" alt="Partner 1" className="h-20" />
 						</div>
 						<div className="bg-white p-2 rounded-lg shadow-sm">
-							<img src="/placeholder.svg?height=40&width=120" alt="Partner 2" className="h-10" />
+							<img src="/icici_prudential_amc_ltd_logo.jpg?height=40&width=120" alt="Partner 2" className="h-20" />
 						</div>
 						<div className="bg-white p-2 rounded-lg shadow-sm">
-							<img src="/placeholder.svg?height=40&width=120" alt="Partner 3" className="h-10" />
+							<img src="/subsidiaries-axis-asset-management-company.jpg?height=40&width=120" alt="Partner 3" className="h-20" />
 						</div>
 						<div className="bg-white p-2 rounded-lg shadow-sm">
-							<img src="/placeholder.svg?height=40&width=120" alt="Partner 4" className="h-10" />
+							<img src="/hdfc.webp?height=40&width=120" alt="Partner 4" className="h-20" />
 						</div>
 						<div className="bg-white p-2 rounded-lg shadow-sm">
 							<img src="/placeholder.svg?height=40&width=120" alt="Partner 5" className="h-10" />

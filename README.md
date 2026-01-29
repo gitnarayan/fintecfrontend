@@ -179,3 +179,13 @@ Helios-Fintec/
 │       └── features/
 │           ├── auth-slice.js
 │           └── mutualFund-slice.js
+
+
+
+Signup
+  → User created (NO token)
+  → OTP sent on email
+Verify Email OTP
+  → Email verified
+  → JWT access + refresh token issued (HttpOnly cookies)
+  → User logged in

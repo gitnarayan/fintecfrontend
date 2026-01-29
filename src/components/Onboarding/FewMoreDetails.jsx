@@ -2,13 +2,18 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+
 
 export default function FewMoreDetailsPage({ onNext, onBack }) {
+
+
+   const router = useRouter();
 
   const [politicallyExposed, setPoliticallyExposed] = useState(null);
   const [taxOutsideIndia, setTaxOutsideIndia] = useState(null);
 
-  
+
 
   return (
     <div className="min-h-screen bg-white pt-5 px-4 md:px-10 lg:px-24 flex flex-col items-center">
@@ -51,11 +56,10 @@ export default function FewMoreDetailsPage({ onNext, onBack }) {
                 type="button"
                 variant="outline"
                 onClick={() => setPoliticallyExposed(option)}
-                className={`rounded-full px-8 py-2 text-sm ${
-                  politicallyExposed === option
+                className={`rounded-full px-8 py-2 text-sm ${politicallyExposed === option
                     ? "bg-blue-600 text-white border-blue-600"
                     : "bg-white text-gray-800 hover:bg-blue-50"
-                }`}
+                  }`}
               >
                 {option}
               </Button>
@@ -75,11 +79,10 @@ export default function FewMoreDetailsPage({ onNext, onBack }) {
                 type="button"
                 variant="outline"
                 onClick={() => setTaxOutsideIndia(option)}
-                className={`rounded-full px-8 py-2 text-sm ${
-                  taxOutsideIndia === option
+                className={`rounded-full px-8 py-2 text-sm ${taxOutsideIndia === option
                     ? "bg-blue-600 text-white border-blue-600"
                     : "bg-white text-gray-800 hover:bg-blue-50"
-                }`}
+                  }`}
               >
                 {option}
               </Button>
@@ -97,12 +100,29 @@ export default function FewMoreDetailsPage({ onNext, onBack }) {
             Back
           </Button>
 
-          <Button
+          {/* <Button
             onClick={onNext}
             className="bg-blue-600 hover:bg-blue-700 text-white px-10 rounded-full"
           >
             Continue
+          </Button> */}
+
+
+          <Button
+            onClick={() => {
+              // optional validation
+              if (!politicallyExposed || !taxOutsideIndia) {
+                alert("Please answer all questions");
+                return;
+              }
+
+              router.push("/dashboard"); // ✅ redirect
+            }}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-10 rounded-full"
+          >
+            Continue
           </Button>
+
         </div>
       </div>
 

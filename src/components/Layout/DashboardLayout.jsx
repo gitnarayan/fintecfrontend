@@ -2,6 +2,10 @@
 
 import React from "react"
 import { useState, useEffect } from "react"
+import { useDispatch } from "react-redux"
+import { useRouter } from "next/navigation"
+import { logout } from "@/store/features/auth-slice"
+
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Bell, CreditCard, HelpCircle, LayoutDashboard, LogOut, Menu, PieChart, Settings, Shield, User, Wallet, X, ChartCandlestick } from "lucide-react"
@@ -42,6 +46,25 @@ export default function DashboardLayout({ children }) {
 			setActivePage(currentPage.name)
 		}
 	}, [pathname])
+
+
+
+
+	const dispatch = useDispatch();
+	const router = useRouter();
+
+	const handleLogout = async () => {
+		await dispatch(logout());
+		router.push("/");
+	};
+
+
+
+
+
+
+
+
 
 	return (
 		<div className="flex min-h-screen bg-gray-50">
@@ -98,12 +121,21 @@ export default function DashboardLayout({ children }) {
 									<span>Settings</span>
 								</DropdownMenuItem>
 								<DropdownMenuSeparator />
-								<Link href="/">
+								{/* <Link href="/">
 									<DropdownMenuItem>
 										<LogOut className="mr-2 h-4 w-4" />
 										<span>Log out</span>
 									</DropdownMenuItem>
-								</Link>
+								</Link> */}
+
+								<DropdownMenuItem
+									onClick={handleLogout}
+									className="text-red-600 cursor-pointer"
+								>
+									<LogOut className="mr-2 h-4 w-4" />
+									<span>Log out</span>
+								</DropdownMenuItem>
+
 							</DropdownMenuContent>
 						</DropdownMenu>
 					</div>
@@ -196,8 +228,8 @@ export default function DashboardLayout({ children }) {
 											href={item.href}
 											onClick={() => setIsSidebarOpen(false)}
 											className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all ${pathname === item.href
-													? "bg-white/10 text-white"
-													: "text-white/70 hover:text-white hover:bg-white/5"
+												? "bg-white/10 text-white"
+												: "text-white/70 hover:text-white hover:bg-white/5"
 												}`}
 										>
 											<item.icon className="h-5 w-5" />
@@ -245,12 +277,24 @@ export default function DashboardLayout({ children }) {
 									<span>Settings</span>
 								</DropdownMenuItem>
 								<DropdownMenuSeparator />
-								<Link href="/">
+								{/* <Link href="/">
 									<DropdownMenuItem>
 										<LogOut className="mr-2 h-4 w-4" />
 										<span>Log out</span>
 									</DropdownMenuItem>
-								</Link>
+								</Link> */}
+
+								<DropdownMenuItem
+									onClick={handleLogout}
+									className="text-red-600 cursor-pointer"
+								>
+									<LogOut className="mr-2 h-4 w-4" />
+									<span>Log out</span>
+								</DropdownMenuItem>
+
+
+
+
 							</DropdownMenuContent>
 						</DropdownMenu>
 					</div>

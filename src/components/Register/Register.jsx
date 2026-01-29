@@ -6,13 +6,40 @@ import { useRouter } from "next/navigation"
 import { useDispatch } from "react-redux"
 import { CalendarDays, Eye, EyeOff, Lock, Mail, Phone, Transgender, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import OtpModal from "@/components/Register/OtpModal";
 import { register } from "@/store/features/auth-slice"
+import dynamic from "next/dynamic";
+
+const Select = dynamic(
+  () => import("@/components/ui/select").then(m => m.Select),
+  { ssr: false }
+);
+
+const SelectTrigger = dynamic(
+  () => import("@/components/ui/select").then(m => m.SelectTrigger),
+  { ssr: false }
+);
+
+const SelectContent = dynamic(
+  () => import("@/components/ui/select").then(m => m.SelectContent),
+  { ssr: false }
+);
+
+const SelectItem = dynamic(
+  () => import("@/components/ui/select").then(m => m.SelectItem),
+  { ssr: false }
+);
+
+const SelectValue = dynamic(
+  () => import("@/components/ui/select").then(m => m.SelectValue),
+  { ssr: false }
+);
+
 
 export default function Register() {
 	const router = useRouter()
@@ -45,40 +72,115 @@ export default function Register() {
 		setFormData({ ...formData, gender: value.toLowerCase() })
 	}
 
-	const handleSubmit = async (e) => {
-		e.preventDefault()
-		setIsLoading(true)
+	// const handleSubmit = async (e) => {
+	// 	e.preventDefault()
+	// 	setIsLoading(true)
 
-		if (formData.password !== formData.confirmPassword) {
-			setError("Passwords do not match!")
-			setIsLoading(false)
-			return
-		}
+	// 	if (formData.password !== formData.confirmPassword) {
+	// 		setError("Passwords do not match!")
+	// 		setIsLoading(false)
+	// 		return
+	// 	}
 
 
-		const finalData = {
-			...formData,
-			mobile: Number(formData.mobile),
-		}
+	// 	const finalData = {
+	// 		...formData,
+	// 		mobile: Number(formData.mobile),
+	// 	}
 
-		delete finalData.confirmPassword
+	// 	delete finalData.confirmPassword
 
-		try {
-			console.log("Submitted:", finalData)
-			const res = await dispatch(register(finalData)).unwrap();
+	// 	try {
+	// 		console.log("Submitted:", finalData)
+	// 		const res = await dispatch(register(finalData)).unwrap();
 
-			console.log("res:", res)
-			if (res?.data?.tokens) {
-				Cookies.set("token", res?.tokens?.access?.token)
-				Cookies.set("refresh", res?.tokens?.refresh?.token)
-				setIsLoading(false)
-				router.push("/dashboard")
-			}
-		} catch (err) {
-			setIsLoading(false)
-			console.error("Registration error", err)
-		}
-	}
+	// 		console.log("res:", res)
+	// 		if (res?.tokens) {
+	// 			// Cookies.set("token", res?.tokens?.access?.token)
+	// 			// Cookies.set("refresh", res?.tokens?.refresh?.token)
+	// 			setIsLoading(false)
+	// 			router.push("/dashboard")
+	// 		}
+	// 	} catch (err) {
+	// 		setIsLoading(false)
+	// 		console.error("Registration error", err)
+	// 	}
+	// }
+
+
+
+	
+
+// 	const handleSubmit = async (e) => {
+//   e.preventDefault()
+//   setIsLoading(true)
+
+//   if (formData.password !== formData.confirmPassword) {
+//     setError("Passwords do not match")
+//     setIsLoading(false)
+//     return
+//   }
+
+//   const finalData = {
+//     ...formData,
+//     mobile: Number(formData.mobile),
+//   }
+
+//   delete finalData.confirmPassword
+
+//   try {
+//     const res = await dispatch(register(finalData)).unwrap()
+//     setIsLoading(false)
+
+//     if (res?.tokens) {
+//       setOpenOtpModal(true) // OTP AFTER SUCCESS
+//     }
+//   } catch (err) {
+//     setIsLoading(false)
+//     setError(err?.message || "Registration failed")
+//   }
+// }
+
+
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  setIsLoading(true)
+  setError("")
+
+  if (formData.password !== formData.confirmPassword) {
+    setError("Passwords do not match")
+    setIsLoading(false)
+    return
+  }
+
+  const finalData = {
+    ...formData,
+    mobile: Number(formData.mobile),
+  }
+
+  delete finalData.confirmPassword
+
+  try {
+    const res = await dispatch(register(finalData)).unwrap()
+    setIsLoading(false)
+
+    // ✅ Signup success
+    // if (res?.user) {
+    //   setOpenOtpModal(true)   // go to OTP step
+    //   // OR: router.push("/onboarding")
+    // }
+
+	// signup success = OTP step
+     setOpenOtpModal(true)
+
+  } catch (err) {
+    setIsLoading(false)
+    setError(err?.message || "Signup failed")
+  }
+}
+
 
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-purple-50 to-blue-50 p-4">
@@ -252,8 +354,8 @@ export default function Register() {
 
 					<CardFooter className="flex flex-col space-y-4 mt-6">
 						<Button
-							type="button"
-							onClick={() => setOpenOtpModal(true)}
+							type="submit"
+							// onClick={() => setOpenOtpModal(true)}
 							className="w-full bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 transition-all"
 							disabled={isLoading}
 						>
