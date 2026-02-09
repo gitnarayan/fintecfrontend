@@ -120,7 +120,7 @@ export const register = createAsyncThunk(
   "auth/register",
   async (data, thunkAPI) => {
     try {
-      const res = await apiClient.post("/auth/signup", data, {
+      const res = await apiClient.post("/auth/signUp", data, {
         withCredentials: true,
       });
       return res.data;

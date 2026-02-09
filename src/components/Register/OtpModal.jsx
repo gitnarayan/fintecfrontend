@@ -194,7 +194,7 @@
 //       window.recaptchaVerifier
 //     );
 
-//     window.confirmationResult = confirmation;
+//     confirmationResultRef.current = confirmation;
 //   };
 
 
@@ -425,7 +425,7 @@
 //   //     recaptchaRef.current
 //   //   )
 //   //     .then((confirmation) => {
-//   //       window.confirmationResult = confirmation;
+//   //       confirmationResultRef.current = confirmation;
 //   //     })
 //   //     .catch((err) => {
 //   //       console.error("OTP send error:", err);
@@ -452,7 +452,7 @@
 //     recaptchaRef.current
 //   )
 //     .then((confirmation) => {
-//       window.confirmationResult = confirmation;
+//       confirmationResultRef.current = confirmation;
 //       console.log("OTP sent");
 //     })
 //     .catch((err) => {
@@ -580,6 +580,8 @@ import {
 
 export default function OtpModal({ open, onClose, onContinue, email = "", mobile = "" }) {
   const CODE_LENGTH = 6;
+  const skipPhoneOtp = process.env.NEXT_PUBLIC_SKIP_PHONE_OTP === "true";
+  console.log("SKIP PHONE OTP", process.env.NEXT_PUBLIC_SKIP_PHONE_OTP);
 
   const [mobileOtp, setMobileOtp] = useState(Array(CODE_LENGTH).fill(""));
   const [mobileVerified, setMobileVerified] = useState(null);
@@ -592,6 +594,7 @@ export default function OtpModal({ open, onClose, onContinue, email = "", mobile
   const mobileRefs = useRef([]);
 
   const recaptchaRef = useRef(null);
+  const confirmationResultRef = useRef(null);
   const otpSentRef = useRef(false); // 🔥 PREVENT MULTIPLE SENDS
   const [recaptchaContainer, setRecaptchaContainer] = useState(null);
 
@@ -613,7 +616,7 @@ export default function OtpModal({ open, onClose, onContinue, email = "", mobile
 
   //   signInWithPhoneNumber(auth, `+91${mobile}`, recaptchaRef.current)
   //     .then((confirmation) => {
-  //       window.confirmationResult = confirmation;
+  //       confirmationResultRef.current = confirmation;
   //       console.log("OTP sent successfully");
   //     })
   //     .catch((err) => {
@@ -638,8 +641,13 @@ export default function OtpModal({ open, onClose, onContinue, email = "", mobile
     if (otp.length !== 6) return;
 
     try {
-      // 1️⃣ Confirm OTP with Firebase
-      const result = await window.confirmationResult.confirm(otp);
+      // Confirm OTP with Firebase
+      if (!confirmationResultRef.current) {
+        console.error("OTP verification failed: confirmation result is missing.");
+        setMobileVerified(false);
+        return;
+      }
+      const result = await confirmationResultRef.current.confirm(otp);
 
       // 2️⃣ Get Firebase ID token
       const firebaseToken = await result.user.getIdToken();
@@ -694,10 +702,14 @@ export default function OtpModal({ open, onClose, onContinue, email = "", mobile
 
 
   useEffect(() => {
+    if (skipPhoneOtp) {
+      if (open) setMobileVerified(true);
+      return;
+    }
     if (!open || !mobile || otpSentRef.current || !recaptchaContainer) return;
 
     otpSentRef.current = true;
-    window.confirmationResult = null;
+    confirmationResultRef.current = null;
 
     // Always recreate verifier to ensure it attaches to the current DOM element
     if (recaptchaRef.current) {
@@ -718,7 +730,7 @@ export default function OtpModal({ open, onClose, onContinue, email = "", mobile
       recaptchaRef.current
     )
       .then((confirmation) => {
-        window.confirmationResult = confirmation;
+        confirmationResultRef.current = confirmation;
         console.log("OTP sent successfully");
       })
       .catch((err) => {
@@ -743,31 +755,7 @@ export default function OtpModal({ open, onClose, onContinue, email = "", mobile
 
 
   /* ---------------- VERIFY OTP ---------------- */
-  // const verifyMobileOtp = async () => {
-  //   const otp = mobileOtp.join("");
-  //   if (otp.length !== CODE_LENGTH) return;
-
-  //   if (!window.confirmationResult) {
-  //     console.error("OTP not sent yet");
-  //     return;
-  //   }
-
-  //   try {
-  //     const result = await window.confirmationResult.confirm(otp);
-  //     console.log("Firebase user:", result.user.uid);
-  //     setMobileVerified(true);
-
-  //     // 🔐 NEXT STEP (backend verification)
-  //     // const firebaseToken = await result.user.getIdToken();
-  //     // await api.post("/auth/verify-mobile", {}, {
-  //     //   headers: { Authorization: `Bearer ${firebaseToken}` }
-  //     // });
-
-  //   } catch (err) {
-  //     console.error("Invalid OTP", err);
-  //     setMobileVerified(false);
-  //   }
-  // };
+ 
 
   /* ---------------- INPUT HANDLER ---------------- */
   const handleChange = (e, index, type) => {
@@ -782,6 +770,7 @@ export default function OtpModal({ open, onClose, onContinue, email = "", mobile
         emailRefs.current[index + 1]?.focus();
       }
     } else {
+      if (skipPhoneOtp) return;
       const next = [...mobileOtp];
       next[index] = val;
       setMobileOtp(next);
@@ -798,6 +787,7 @@ export default function OtpModal({ open, onClose, onContinue, email = "", mobile
       const setOtp = type === "email" ? setEmailOtp : setMobileOtp;
       const refs = type === "email" ? emailRefs : mobileRefs;
 
+      if (type !== "email" && skipPhoneOtp) return;
       if (!otp[index] && index > 0) {
         refs.current[index - 1]?.focus();
         const next = [...otp];
@@ -845,27 +835,6 @@ const resendEmail = async () => {
     console.error("Resend OTP failed", err);
   }
 };
-
-
-
-
-
-
-
-  //   const handleVerifyEmail = async () => {
-
-  //     await dispatch(verifyEmail()).unwrap();
-      
-  //   const code = emailOtp.join("");
-
-  //   router.push("/dashboard");
-
-  //   // TEMP: treat any full 6-digit as valid — replace with server validation
-  //   // if (code.length === CODE_LENGTH) {
-  //   //   setEmailVerified(true);
-  //   // }
-  // };
-
 
 
 
@@ -996,31 +965,31 @@ const handleVerifyEmail = async () => {
 
 
 
+        {!skipPhoneOtp && (
+          <>
+            {/* REQUIRED FOR FIREBASE */}
+            <div ref={setRecaptchaContainer}></div>
 
+            <div className="mt-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Phone className="w-5 h-5 text-rose-600" />
+                <span className="text-sm">+91 {mobile}</span>
+              </div>
 
+              <div className="flex gap-2 justify-center mb-4">
+                {renderInputs("mobile")}
+              </div>
 
+              {mobileVerified === false && (
+                <p className="text-red-500 text-sm text-center">Invalid OTP</p>
+              )}
 
-        {/* REQUIRED FOR FIREBASE */}
-        <div ref={setRecaptchaContainer}></div>
-
-        <div className="mt-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Phone className="w-5 h-5 text-rose-600" />
-            <span className="text-sm">+91 {mobile}</span>
-          </div>
-
-          <div className="flex gap-2 justify-center mb-4">
-            {renderInputs("mobile")}
-          </div>
-
-          {mobileVerified === false && (
-            <p className="text-red-500 text-sm text-center">Invalid OTP</p>
-          )}
-
-          <Button className="w-full" onClick={verifyMobileOtp}>
-            Verify Mobile OTP
-          </Button>
-        </div>
+              <Button className="w-full" onClick={verifyMobileOtp}>
+                Verify Mobile OTP
+              </Button>
+            </div>
+          </>
+        )}
 
         <Button
           disabled={!mobileVerified}
@@ -1036,3 +1005,6 @@ const handleVerifyEmail = async () => {
     </Dialog>
   );
 }
+
+
+
