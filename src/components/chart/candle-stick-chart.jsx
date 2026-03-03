@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Line, Legend } from "recharts"
+import { Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Line, Legend } from "recharts"
 
 // Generate random candle stick data
 const generateCandleStickData = (days, trend) => {
@@ -43,14 +43,14 @@ const generateCandleStickData = (days, trend) => {
 
 
 export function CandleStickChart({ timeRange, trend }) {
-	const [ data, setData ] = useState([])
+	const [data, setData] = useState([])
 
 	useEffect(() => {
 		// Set days based on time range
 		const days = timeRange === "1D" ? 1 : timeRange === "1W" ? 7 : timeRange === "1M" ? 30 : timeRange === "3M" ? 90 : timeRange === "1Y" ? 365 : 180
 
 		setData(generateCandleStickData(Math.min(days, 30), trend))
-	}, [ timeRange, trend ])
+	}, [timeRange, trend])
 
 	const formatCurrency = (value) => {
 		return new Intl.NumberFormat("en-IN", {
@@ -67,20 +67,20 @@ export function CandleStickChart({ timeRange, trend }) {
 				<div className="bg-white p-3 border rounded-md shadow-md">
 					<p className="font-medium">{label}</p>
 					<p className="text-sm">
-						<span className="font-medium">Open:</span> {formatCurrency(payload[ 0 ].payload.open)}
+						<span className="font-medium">Open:</span> {formatCurrency(payload[0].payload.open)}
 					</p>
 					<p className="text-sm">
-						<span className="font-medium">High:</span> {formatCurrency(payload[ 0 ].payload.high)}
+						<span className="font-medium">High:</span> {formatCurrency(payload[0].payload.high)}
 					</p>
 					<p className="text-sm">
-						<span className="font-medium">Low:</span> {formatCurrency(payload[ 0 ].payload.low)}
+						<span className="font-medium">Low:</span> {formatCurrency(payload[0].payload.low)}
 					</p>
 					<p className="text-sm">
-						<span className="font-medium">Close:</span> {formatCurrency(payload[ 0 ].payload.close)}
+						<span className="font-medium">Close:</span> {formatCurrency(payload[0].payload.close)}
 					</p>
 					<p className="text-sm">
 						<span className="font-medium">Volume:</span>{" "}
-						{new Intl.NumberFormat("en-IN").format(payload[ 0 ].payload.volume)}
+						{new Intl.NumberFormat("en-IN").format(payload[0].payload.volume)}
 					</p>
 				</div>
 			)
@@ -117,7 +117,7 @@ export function CandleStickChart({ timeRange, trend }) {
 					tickLine={false}
 					tick={{ fontSize: 12, fill: "#6b7280" }}
 					tickMargin={10}
-					domain={[ "auto", "auto" ]}
+					domain={["auto", "auto"]}
 				/>
 				<YAxis
 					yAxisId="right"
@@ -127,12 +127,12 @@ export function CandleStickChart({ timeRange, trend }) {
 					tickLine={false}
 					tick={{ fontSize: 12, fill: "#6b7280" }}
 					tickMargin={10}
-					domain={[ "auto", "auto" ]}
+					domain={["auto", "auto"]}
 				/>
 				<Tooltip content={<CustomTooltip />} />
 				<Legend />
-				<Bar yAxisId="left" dataKey="volume" fill="#e5e7eb" opacity={0.5} barSize={20} name="Volume" />
-				<Bar
+				<Bar yAxisId="right" dataKey="volume" fill="#e5e7eb" opacity={0.5} barSize={20} name="Volume" />
+				{/* <Bar
 					yAxisId="left"
 					name="Price"
 					dataKey="open"
@@ -140,7 +140,25 @@ export function CandleStickChart({ timeRange, trend }) {
 					stroke={(entry) => (entry.open > entry.close ? "#ef4444" : "#10b981")}
 					strokeWidth={1}
 					barSize={6}
-				/>
+				/> */}
+
+				<Bar
+					yAxisId="left"
+					name="Price"
+					dataKey="open"
+					fill="#10b981"
+					stroke="#10b981"
+					strokeWidth={1}
+					barSize={6}
+				>
+					{data.map((entry, index) => {
+						const color = entry.open > entry.close ? "#ef4444" : "#10b981"
+						return <Cell key={`price-cell-${index}`} fill={color} stroke={color} />
+					})}
+				</Bar>
+
+
+
 				<Line yAxisId="left" type="monotone" dataKey="ma5" stroke="#8b5cf6" dot={false} name="MA5" strokeWidth={2} />
 				<Line yAxisId="left" type="monotone" dataKey="ma20" stroke="#3b82f6" dot={false} name="MA20" strokeWidth={2} />
 			</ComposedChart>
